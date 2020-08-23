@@ -1,7 +1,9 @@
 <?php
 
-namespace Tests;
+namespace ThinRepositoryTests;
 
-class TestCase {
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+
+class TestCase extends OrchestraTestCase {
   
 }
