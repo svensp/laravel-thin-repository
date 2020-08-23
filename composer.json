@@ -1,0 +1,13 @@
+{
+    "name": "svensp/laravel-thin-repository",
+    "description": "Repository trait to add conditions and forget them on get/find",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sven Speckmaier",
+            "email": "sven@speckmaier.de"
+        }
+    ],
+    "require": {}
+}
