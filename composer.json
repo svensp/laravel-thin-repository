@@ -16,6 +16,7 @@
     },
     "autoload-dev": {
       "psr-4": {
+        "ThinRepositoryExamples\\": "examples/",
         "ThinRepositoryTests\\": "tests/"
       }
     },

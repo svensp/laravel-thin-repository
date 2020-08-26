@@ -1,2 +1,1 @@
-let b:src_namespace="ThinRepository"
-let b:tests_namespace="ThinRepositoryTests"
+let b:namespace_roots='{"src":"ThinRepository", "tests":"ThinRepositoryTests", "examples":"ThinRepositoryExamples"}'
