@@ -25,7 +25,7 @@ class ExampleBuilderTest extends TestCase {
     $result = $this
       ->exampleBuilder
       ->set('cookies', 'yum')
-      ->find();
+      ->firstOrFail();
     $this->assertEquals('yum', $result->cookies);
   }
 
@@ -37,11 +37,11 @@ class ExampleBuilderTest extends TestCase {
     $this
       ->exampleBuilder
       ->set('cookies', 'yum')
-      ->find();
+      ->firstOrFail();
 
     $result = $this
       ->exampleBuilder
-      ->find();
+      ->firstOrFail();
     $this->assertObjectNotHasAttribute('cookies', $result);
   }
 

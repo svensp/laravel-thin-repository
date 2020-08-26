@@ -8,9 +8,9 @@ class ExampleBuilder {
 
   protected $values = [];
 
-  protected $amount = 0;
+  protected $amount = 1;
 
-  public function find()
+  public function firstOrFail()
   {
     $object = new stdClass();
 

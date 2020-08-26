@@ -12,11 +12,6 @@ class ThinRepositoryTest extends TestCase {
    **/
   protected $repository;
 
-  /**
-   * 
-   **/
-  protected $testModel;
-
   public function setUp() : void
   {
     parent::setUp();
@@ -26,8 +21,20 @@ class ThinRepositoryTest extends TestCase {
   /**
    * @test
    **/
-  public function dummy()
+  public function can_find_object()
   {
-    $this->assertTrue(true);
+    $object = $this->repository->find();
+    $this->assertIsObject($object);
   }
+
+  /**
+   * @test
+   **/
+  public function can_get_objects()
+  {
+    $objects = $this->repository->get();
+    $this->assertCount(1, $objects);
+    $this->assertIsObject($objects[0]);
+  }
+
 }

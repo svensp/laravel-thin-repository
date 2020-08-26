@@ -10,11 +10,11 @@ class ExampleRepository {
   /**
    * @var ExampleModel
    **/
-  protected $exampleModel;
+  protected $model;
 
-  public function __construct(ExampleModel $exampleModel)
+  public function __construct(ExampleModel $model)
   {
-    $this->exampleModel = $exampleModel;
+    $this->model = $model;
   }
 
 }
