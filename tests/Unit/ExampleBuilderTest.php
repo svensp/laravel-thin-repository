@@ -24,7 +24,7 @@ class ExampleBuilderTest extends TestCase {
   {
     $result = $this
       ->exampleBuilder
-      ->set('cookies', 'yum')
+      ->where('cookies', 'yum')
       ->firstOrFail();
     $this->assertEquals('yum', $result->cookies);
   }
@@ -36,7 +36,7 @@ class ExampleBuilderTest extends TestCase {
   {
     $this
       ->exampleBuilder
-      ->set('cookies', 'yum')
+      ->where('cookies', 'yum')
       ->firstOrFail();
 
     $result = $this
@@ -52,8 +52,7 @@ class ExampleBuilderTest extends TestCase {
   {
     $result = $this
       ->exampleBuilder
-      ->set('cookies', 'yum')
-      ->count(2)
+      ->where('cookies', 'yum')
       ->get();
     $this->assertCount(2, $result);
   }
@@ -65,8 +64,7 @@ class ExampleBuilderTest extends TestCase {
   {
     $result = $this
       ->exampleBuilder
-      ->set('cookies', 'yum')
-      ->count(2)
+      ->where('cookies', 'yum')
       ->get();
 
     foreach($result as $object) {
@@ -81,13 +79,11 @@ class ExampleBuilderTest extends TestCase {
   {
     $result = $this
       ->exampleBuilder
-      ->set('cookies', 'yum')
-      ->count(2)
+      ->where('cookies', 'yum')
       ->get();
 
     $result = $this
       ->exampleBuilder
-      ->count(2)
       ->get();
 
     foreach($result as $object) {

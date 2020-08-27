@@ -4,11 +4,15 @@ namespace ThinRepositoryExamples;
 
 use stdClass;
 
+/**
+ * This ExampleBuilder is a builder used for testing. It echoes the
+ * structure of the Eloquent query builder with firstOrFail and get being the
+ * relevant functions to get the result and 'where' setting values on the
+ * returned object so the objects can be used in test assertions
+ **/
 class ExampleBuilder {
 
   protected $values = [];
-
-  protected $amount = 1;
 
   public function firstOrFail()
   {
@@ -24,7 +28,7 @@ class ExampleBuilder {
   {
     $result = [];
 
-    for($j=0 ; $j < $this->amount; ++$j) {
+    for($j=0 ; $j < 2; ++$j) {
       $newResult = new StdClass;
 
       $this->applyValues($newResult);
@@ -37,14 +41,7 @@ class ExampleBuilder {
     return $result;
   }
 
-  public function count($amount)
-  {
-    $this->amount = $amount;
-    
-    return $this;
-  }
-
-  public function set($name, $value)
+  public function where($name, $value)
   {
     $this->values[$name] = $value;
     return $this;
