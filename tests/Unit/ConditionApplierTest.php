@@ -194,7 +194,8 @@ class ConditionApplierTest extends TestCase {
   {
     $this->makeConditions();
     $this->conditionApplier
-         ->condition($this->condition1, $name1)
+         ->condition($this->condition1, $name1);
+    $this->conditionApplier
          ->condition($this->condition2, $name2);
   }
 
