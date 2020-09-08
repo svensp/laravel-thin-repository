@@ -24,5 +24,12 @@
     "require-dev": {
         "phpunit/phpunit": "^9.3",
         "orchestra/testbench": "^4.0"
+    },
+    "extra": {
+      "laravel": {
+        "aliases": {
+          "ElementRenamer": "ThinRepository\\ElementRenamer\\ElementRenamerFactory"
+        }
+      }
     }
 }
