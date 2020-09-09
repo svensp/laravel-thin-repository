@@ -44,6 +44,7 @@ class ArrayElementRenamer implements ElementRenamer {
   private function putRenamedEntry($newName)
   {
     $this->array[$newName] = $this->value;
+    $this->key = $newName;
   }
   
 }

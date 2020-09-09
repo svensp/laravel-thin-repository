@@ -39,6 +39,7 @@ class CollectionElementRenamer implements ElementRenamer {
   private function putNewEntry($newName)
   {
     $this->collection->put($newName, $this->value);
+    $this->key = $newName;
   }
   
 }

@@ -101,14 +101,14 @@ abstract class AbstractElementRenamerTest extends TestCase {
     $this->renamer->named('test-key');
     $this->renamer->named('renamed-key');
 
-    $this->assertArrayNotHasKey('tet-key', $this->arrayOrCollection);
+    $this->assertArrayNotHasKey('test-key', $this->arrayOrCollection);
     $this->assertEntryWithKeyCreated($object, 'renamed-key');
   }
 
   private function assertEntryWithKeyCreated($value, $key)
   {
     $this->assertArrayHasKey($key, $this->arrayOrCollection);
-    $this->assertEquals($value, $this->arrayOrCollection['test-key']);
+    $this->assertEquals($value, $this->arrayOrCollection[$key]);
     
   }
 
