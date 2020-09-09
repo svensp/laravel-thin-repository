@@ -26,12 +26,12 @@ trait ThinRepository {
   protected function condition(Closure $closure)
   {
     $condition = new LambdaCondition($closure);
-    $this->advancedCondition($condition);
+    return $this->advancedCondition($condition);
   }
 
   protected function advancedCondition(Condition $condition)
   {
-    $this->getConditionApplier()->condition($condition);
+    return $this->getConditionApplier()->condition($condition);
   }
 
   protected function query()

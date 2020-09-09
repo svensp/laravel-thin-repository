@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 
 class ElementRenamerFactory {
 
-  public function pushAndMake($value, $arrayOrCollection)
+  public function pushAndMake($value, &$arrayOrCollection)
   {
     if( $this->isCollection($arrayOrCollection) ) {
       return CollectionElementRenamer::pushAndCreate($value, $arrayOrCollection);

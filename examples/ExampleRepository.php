@@ -12,11 +12,19 @@ class ExampleRepository {
 
   protected $modelClassPath = ExampleModel::class;
 
+  public function forMyself()
+  {
+    $this->condition(function($builder) {
+      $builder->where('for_myself', 1);
+    })->named('user');
+    return $this;
+  }
+
   public function forUser($userId)
   {
     $this->condition(function($builder) use ($userId) {
       $builder->where('for_user_id', $userId);
-    });
+    })->named('user');
     return $this;
   }
 

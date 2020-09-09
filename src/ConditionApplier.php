@@ -2,14 +2,27 @@
 
 namespace ThinRepository;
 
+use ThinRepository\ElementRenamer\ElementRenamerFactory;
+
 class ConditionApplier {
 
   /**
    * @var Condition[]
    **/
-  protected $conditions = [];
+  private $conditions;
 
-  protected $persist = false;
+  private $persist = false;
+
+  /**
+   * @var ElementRenamerFactory
+   **/
+  private $elementRenamerFactory;
+
+  public function __construct(ElementRenamerFactory $elementRenamerFactory)
+  {
+    $this->conditions = collect();
+    $this->elementRenamerFactory = $elementRenamerFactory;
+  }
 
   public function apply($builder)
   {
@@ -20,15 +33,11 @@ class ConditionApplier {
     $this->reset();
   }
 
-  public function condition(Condition $condition, $name = null)
+  public function condition(Condition $condition)
   {
-    if($name === null) {
-      $this->conditions[] = $condition;
-      return $this;
-    }
-
-    $this->conditions[$name] = $condition;
-    return $this;
+    $renamer = $this->elementRenamerFactory
+                    ->pushAndMake($condition, $this->conditions);
+    return $renamer;
   }
 
   public function persist()

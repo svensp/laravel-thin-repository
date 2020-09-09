@@ -70,7 +70,7 @@ class ConditionApplierTest extends TestCase {
   public function can_take_named_condition()
   {
     $condition = Mockery::mock(Condition::class);
-    $this->conditionApplier->condition($condition, 'name');
+    $this->conditionApplier->condition($condition)->named('name');
     $this->assertTrue(true);
   }
 
@@ -194,9 +194,9 @@ class ConditionApplierTest extends TestCase {
   {
     $this->makeConditions();
     $this->conditionApplier
-         ->condition($this->condition1, $name1);
+         ->condition($this->condition1)->named($name1);
     $this->conditionApplier
-         ->condition($this->condition2, $name2);
+         ->condition($this->condition2)->named($name2);
   }
 
   protected function makeConditions()

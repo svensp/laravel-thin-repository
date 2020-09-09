@@ -91,4 +91,18 @@ class ThinRepositoryTest extends TestCase {
       $this->assertEquals(12, $result->object_condition);
     }
   }
+
+  /**
+   * @test
+   **/
+  public function can_override_conditions()
+  {
+    $result = $this->repository
+         ->forUser(12)
+         ->forMyself()
+         ->find();
+      $this->assertObjectNotHasAttribute('for_user_id', $result);
+      $this->assertObjectHasAttribute('for_myself', $result);
+      $this->assertEquals(1, $result->for_myself);
+  }
 }
