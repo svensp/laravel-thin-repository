@@ -9,7 +9,7 @@ class ConditionApplier {
   /**
    * @var Condition[]
    **/
-  private $conditions;
+  private $conditions = [];
 
   private $persist = false;
 
@@ -20,7 +20,7 @@ class ConditionApplier {
 
   public function __construct(ElementRenamerFactory $elementRenamerFactory)
   {
-    $this->conditions = collect();
+    $this->conditions = [];
     $this->elementRenamerFactory = $elementRenamerFactory;
   }
 

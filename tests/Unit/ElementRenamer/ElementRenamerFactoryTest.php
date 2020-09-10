@@ -43,4 +43,28 @@ class ElementRenamerFactoryTest extends TestCase {
     $this->assertInstanceOf(CollectionElementRenamer::class, $renamer);
   }
 
+  /**
+   * @test
+   **/
+  public function can_rename_in_array()
+  {
+    $value = 'something';
+    $array = [];
+
+    $this->renamerFactory->pushAndMake($value, $array)->named('hi');
+    $this->assertArrayHasKey('hi', $array);
+  }
+
+  /**
+   * @test
+   **/
+  public function can_rename_in_collection()
+  {
+    $value = 'something';
+    $array = collect();
+
+    $this->renamerFactory->pushAndMake($value, $array)->named('hi');
+    $this->assertArrayHasKey('hi', $array);
+  }
+
 }

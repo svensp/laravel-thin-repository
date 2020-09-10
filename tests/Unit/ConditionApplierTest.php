@@ -79,13 +79,10 @@ class ConditionApplierTest extends TestCase {
    **/
   public function conditions_are_applied_to_builder()
   {
-    $this->withBuilder(function(MockInterface $builder) {
-      $builder->shouldReceive('someFunction')->with('some-argument')->once();
-      $builder->shouldReceive('otherFunction')->with('other-argument')->once();
-    });
+    $this->withBuilder();
+    $this->addAnonymousConditions();
 
-    $this->addConditions();
-
+    $this->expectCondtionFunctionsCalledTimes(1);
     $this->applyConditions();
   }
 
@@ -94,12 +91,10 @@ class ConditionApplierTest extends TestCase {
    **/
   public function named_conditions_are_applied_to_builder()
   {
-    $this->withBuilder(function(MockInterface $builder) {
-      $builder->shouldReceive('someFunction')->with('some-argument')->once();
-      $builder->shouldReceive('otherFunction')->with('other-argument')->once();
-    });
+    $this->withBuilder();
+    $this->addNamedConditions('1', '2');
 
-    $this->addConditions('1', '2');
+    $this->expectCondtionFunctionsCalledTimes(1);
     $this->applyConditions();
   }
 
@@ -113,7 +108,7 @@ class ConditionApplierTest extends TestCase {
       $builder->shouldReceive('otherFunction')->with('other-argument')->once();
     });
 
-    $this->addConditions('condition', 'condition');
+    $this->addNamedConditions('condition', 'condition');
     $this->applyConditions();
   }
 
@@ -122,18 +117,13 @@ class ConditionApplierTest extends TestCase {
    **/
   public function conditions_reset_after_apply()
   {
-    $this->withBuilder(function(MockInterface $builder) {
-      $builder->shouldReceive('someFunction')->with('some-argument')->once();
-      $builder->shouldReceive('otherFunction')->with('other-argument')->once();
-    });
+    $this->withBuilder();
+    $this->addAnonymousConditions();
 
-    $this->addConditions();
+    $this->expectCondtionFunctionsCalledTimes(1);
     $this->applyConditions();
 
-    $this->withBuilder(function(MockInterface $newBuilder) {
-      $newBuilder->shouldReceive('someFunction')->never();
-      $newBuilder->shouldReceive('otherFunction')->never();
-    });
+    $this->expectCondtionFunctionsNeverCalled();
     $this->applyConditions();
   }
 
@@ -142,19 +132,12 @@ class ConditionApplierTest extends TestCase {
    **/
   public function preserve_conditions_persist_after_apply()
   {
-    $this->withBuilder(function(MockInterface $builder) {
-      $builder->shouldReceive('someFunction')->with('some-argument')->once();
-      $builder->shouldReceive('otherFunction')->with('other-argument')->once();
-    });
-
-    $this->addConditions();
+    $this->withBuilder();
+    $this->addAnonymousConditions();
     $this->persistConditions();
-    $this->applyConditions();
 
-    $this->withBuilder(function(MockInterface $newBuilder) {
-      $newBuilder->shouldReceive('someFunction')->with('some-argument')->once();
-      $newBuilder->shouldReceive('otherFunction')->with('other-argument')->once();
-    });
+    $this->expectCondtionFunctionsCalledTimes(2);
+    $this->applyConditions();
     $this->applyConditions();
   }
 
@@ -163,20 +146,15 @@ class ConditionApplierTest extends TestCase {
    **/
   public function preserve_conditions_after_2nd_apply()
   {
-    $this->withBuilder(function(MockInterface $builder) {
-      $builder->shouldReceive('someFunction')->with('some-argument')->times(2);
-      $builder->shouldReceive('otherFunction')->with('other-argument')->times(2);
-    });
-
-    $this->addConditions();
+    $this->withBuilder();
+    $this->addAnonymousConditions();
     $this->persistConditions();
+
+    $this->expectCondtionFunctionsCalledTimes(2);
     $this->applyConditions();
     $this->applyConditions();
 
-    $this->withBuilder(function(MockInterface $newBuilder) {
-      $newBuilder->shouldReceive('someFunction')->with('some-argument')->never();
-      $newBuilder->shouldReceive('otherFunction')->with('other-argument')->never();
-    });
+    $this->expectCondtionFunctionsNeverCalled();
     $this->applyConditions();
   }
 
@@ -190,13 +168,34 @@ class ConditionApplierTest extends TestCase {
     $this->conditionApplier->persist();
   }
 
-  protected function addConditions($name1 = null, $name2 = null)
+  protected function addNamedConditions(string $name1, string $name2)
   {
     $this->makeConditions();
     $this->conditionApplier
          ->condition($this->condition1)->named($name1);
     $this->conditionApplier
          ->condition($this->condition2)->named($name2);
+  }
+
+  protected function addAnonymousConditions()
+  {
+    $this->makeConditions();
+    $this->conditionApplier
+         ->condition($this->condition1);
+    $this->conditionApplier
+         ->condition($this->condition2);
+  }
+
+  private function expectCondtionFunctionsCalledTimes($times)
+  {
+    $this->builder->shouldReceive('someFunction')->with('some-argument')->times($times);
+    $this->builder->shouldReceive('otherFunction')->with('other-argument')->times($times);
+  }
+
+  private function expectCondtionFunctionsNeverCalled()
+  {
+    $this->builder->shouldReceive('someFunction')->with('some-argument')->never();
+    $this->builder->shouldReceive('otherFunction')->with('other-argument')->never();
   }
 
   protected function makeConditions()
