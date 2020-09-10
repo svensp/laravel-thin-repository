@@ -4,6 +4,13 @@ thin repository tries to make it simple to extend the beatiful chaining of
 conditions found in the laravel Eloquent querybuilder to a repository for this
 model.
 
+## Updating
+
+- 1.0.0 -> 2.0.0: the condition and advancedCondition functions no longer take
+    the name as parameter with a default value. They instead return an
+    ElementRenamer which allows to specify a name via the `named` method.  
+    Example: `$this->condition(function() {})->named('user');`
+
 ## Install
 
 laravel thin repository is installed via composer
