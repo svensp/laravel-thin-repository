@@ -44,10 +44,9 @@ class ThinRepositoryTest extends TestCase {
   public function can_set_user_id_through_find()
   {
     $result = $this->repository
-         ->forUser(5)
-         ->find();
-    $this->assertObjectHasAttribute('for_user_id', $result);
-    $this->assertEquals(5, $result->for_user_id);
+                   ->forUser(5)
+                   ->find();
+    $this->assertForUserWasAppliedToResultWithId($result, 5);
   }
 
   /**
@@ -56,12 +55,11 @@ class ThinRepositoryTest extends TestCase {
   public function can_set_user_id_through_get()
   {
     $results = $this->repository
-         ->forUser(5)
-         ->get();
+                    ->forUser(5)
+                    ->get();
     $this->assertCount(2, $results);
     foreach($results as $result) {
-      $this->assertObjectHasAttribute('for_user_id', $result);
-      $this->assertEquals(5, $result->for_user_id);
+      $this->assertForUserWasAppliedToResultWithId($result, 5);
     }
   }
 
@@ -71,8 +69,8 @@ class ThinRepositoryTest extends TestCase {
   public function can_use_object_condition_through_find()
   {
     $result = $this->repository
-         ->objectCondition(10)
-         ->find();
+                   ->objectCondition(10)
+                   ->find();
     $this->assertObjectHasAttribute('object_condition', $result);
     $this->assertEquals(10, $result->object_condition);
   }
@@ -83,8 +81,8 @@ class ThinRepositoryTest extends TestCase {
   public function can_use_object_condition_through_get()
   {
     $results = $this->repository
-         ->objectCondition(12)
-         ->get();
+                    ->objectCondition(12)
+                    ->get();
     $this->assertCount(2, $results);
     foreach($results as $result) {
       $this->assertObjectHasAttribute('object_condition', $result);
@@ -98,11 +96,27 @@ class ThinRepositoryTest extends TestCase {
   public function can_override_conditions()
   {
     $result = $this->repository
-         ->forUser(12)
-         ->forMyself()
-         ->find();
-      $this->assertObjectNotHasAttribute('for_user_id', $result);
-      $this->assertObjectHasAttribute('for_myself', $result);
-      $this->assertEquals(1, $result->for_myself);
+                   ->forUser(12)
+                   ->forMyself()
+                   ->find();
+    $this->assertNotForUserWasAppliedToResult($result);
+    $this->assertForMyselfWasAppliedToResult($result);
+  }
+
+  private function assertForUserWasAppliedToResultWithId($result, $id)
+  {
+    $this->assertObjectHasAttribute('for_user_id', $result);
+    $this->assertEquals($id, $result->for_user_id);
+  }
+
+  private function assertNotForUserWasAppliedToResult($result)
+  {
+    $this->assertObjectNotHasAttribute('for_user_id', $result);
+  }
+
+  private function assertForMyselfWasAppliedToResult($result)
+  {
+    $this->assertObjectHasAttribute('for_myself', $result);
+    $this->assertEquals(1, $result->for_myself);
   }
 }
