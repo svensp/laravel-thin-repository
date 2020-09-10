@@ -34,6 +34,11 @@ trait ThinRepository {
     return $this->getConditionApplier()->condition($condition);
   }
 
+  public function removeConditionNamed($name)
+  {
+    $this->conditionApplier->remove($name);
+  }
+
   protected function query()
   {
 

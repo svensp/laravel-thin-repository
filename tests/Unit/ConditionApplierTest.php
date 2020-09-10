@@ -158,6 +158,16 @@ class ConditionApplierTest extends TestCase {
     $this->applyConditions();
   }
 
+  public function can_reset_named_condition()
+  {
+    $this->withBuilder();
+    $this->addNamedConditions('test1', 'test2');
+    $this->persistConditions();
+
+    $this->expectCondtionFunctionsCalledTimes(2);
+    $this->applyConditions();
+  }
+
   protected function applyConditions()
   {
     $this->conditionApplier->apply($this->builder);

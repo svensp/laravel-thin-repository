@@ -12,6 +12,14 @@ class ExampleRepository {
 
   protected $modelClassPath = ExampleModel::class;
 
+  public function forUser($userId)
+  {
+    $this->condition(function($builder) use ($userId) {
+      $builder->where('for_user_id', $userId);
+    })->named('user');
+    return $this;
+  }
+
   public function forMyself()
   {
     $this->condition(function($builder) {
@@ -20,11 +28,9 @@ class ExampleRepository {
     return $this;
   }
 
-  public function forUser($userId)
+  public function forEveryone()
   {
-    $this->condition(function($builder) use ($userId) {
-      $builder->where('for_user_id', $userId);
-    })->named('user');
+    $this->removeConditionNamed('user');
     return $this;
   }
 

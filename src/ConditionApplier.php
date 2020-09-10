@@ -40,6 +40,12 @@ class ConditionApplier {
     return $renamer;
   }
 
+  public function remove($name)
+  {
+    unset($this->conditions[$name]);
+    return $this;
+  }
+
   public function persist()
   {
     $this->persist = true;

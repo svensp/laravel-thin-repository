@@ -103,6 +103,18 @@ class ThinRepositoryTest extends TestCase {
     $this->assertForMyselfWasAppliedToResult($result);
   }
 
+  /**
+   * @test
+   **/
+  public function can_reset_conditions()
+  {
+    $result = $this->repository
+                   ->forUser(12)
+                   ->forEveryone()
+                   ->find();
+    $this->assertNotForUserWasAppliedToResult($result);
+  }
+
   private function assertForUserWasAppliedToResultWithId($result, $id)
   {
     $this->assertObjectHasAttribute('for_user_id', $result);
